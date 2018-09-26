@@ -16,8 +16,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        double[] mkm = Lab1.doTask1(a0Star, b); // МКМ реализация
-        double[] maklarenMarsalia = Lab1.doTask2(a0Star, b, k); // реализация Макларена-Марсалии
+        final double[] mkm = Lab1.doTask1(a0Star, b); // МКМ реализация
+        final double[] maklarenMarsalia = Lab1.doTask2(a0Star, b, k); // реализация Макларена-Марсалии
 
         System.out.println("Реализация БСВ с помощью мультипликативного конгруэнтного метода:\n");
         System.out.println(Arrays.toString(mkm));
