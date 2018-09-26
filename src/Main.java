@@ -1,4 +1,4 @@
-import Labs.Lab1;
+import labs.Lab1;
 
 import java.util.Arrays;
 

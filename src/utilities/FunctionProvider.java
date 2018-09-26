@@ -8,9 +8,11 @@ public class FunctionProvider {
     public static double getEmpiricFunc(final double xBound, final double[] xi) { // функция распределения, xBound - точка, в которой мы хотим вычислить значение функции
         final int n = xi.length;
         double count = 0;
+
         for (double aX : xi) {
             count += getI(aX, xBound);
         }
+
         count /= n;
 
         return count;

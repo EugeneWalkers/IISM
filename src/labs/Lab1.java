@@ -1,4 +1,4 @@
-package Labs;
+package labs;
 
 import utilities.FunctionProvider;
 
@@ -15,23 +15,25 @@ public final class Lab1 {
     }
 
     public static double[] doTask1(final double a0Star, final double b) {
-        double[] output = new double[N]; // выходной массив реализаций БСВ
-        double[] temp = new double[N]; // вспомогательный массив для расчетов
+        final double[] output = new double[N]; // выходной массив реализаций БСВ
+        final double[] temp = new double[N]; // вспомогательный массив для расчетов
         temp[0] = a0Star;
         output[0] = a0Star / M;
+
         IntStream.range(1, N).forEach(i -> { // представляет собой for (int i = 1; i < N; i++) { }, остальное по формулам
             temp[i] = (b * temp[i - 1]) % M;
             output[i] = temp[i] / M;
         });
+
         return output;
     }
 
     public static double[] doTask2(final double a0Star, final double b, final int k) {
-        double[] output = new double[N]; // выходной массив реализаций БСВ
-        double[] vi = new double[k];
+        final double[] output = new double[N]; // выходной массив реализаций БСВ
+        final double[] vi = new double[k];
 
-        double[] bi = doTask1(a0Star, b); // исходя из условия один из датчиков МКМ
-        double[] ci = doTask1(a0Star, b); // почему бы и нет?
+        final double[] bi = doTask1(a0Star, b); // исходя из условия один из датчиков МКМ
+        final double[] ci = doTask1(a0Star, b); // почему бы и нет?
 
         /*
         Random random = new Random();
@@ -43,7 +45,7 @@ public final class Lab1 {
         System.arraycopy(bi, 0, vi, 0, k);
 
         IntStream.range(0, N).forEach(i -> { // представляет собой for (int i = 0; i < N; i++){ ... }, остальное - по формулам
-            int s = (int) Math.abs(ci[i] * k);
+            final int s = (int) Math.abs(ci[i] * k);
             output[i] = vi[s];
             vi[s] = i + k >= N ? bi[(i + k) % N] : bi[i + k];
         });
@@ -53,17 +55,21 @@ public final class Lab1 {
 
     public static String doTask3(final double[] mas, final double delta, final double eps) {
         final StringBuilder builder = new StringBuilder();
+
         if (Kolmogorov.isFulfilled(mas, delta)) {
             builder.append("Критерий Колмогорова выполнился");
         } else {
             builder.append("Критерий Колмогорова не выполнился");
         }
+
         builder.append("\n");
+
         if (Pirson.isFulfilled(mas, eps)) {
             builder.append("Критерий Пирсона выполнился");
         } else {
             builder.append("Критерий Пирсона не выполнился");
         }
+
         return builder.toString();
     }
 
@@ -77,29 +83,32 @@ public final class Lab1 {
             final double dn = getDn(mas);
             final int n = mas.length;
             final double result = Math.sqrt(n) * dn;
+
             return result <= delta;
         }
 
         private static double getDn(final double[] mas) { // Dn - это максимум из Dn- и Dn+, каждая считается по своей формуле, используя функцию распределения
-            double dnPlus = getDnPlus(mas);
-            double dnMinus = getDnMinus(mas);
+            final double dnPlus = getDnPlus(mas);
+            final double dnMinus = getDnMinus(mas);
 
             return Math.max(dnPlus, dnMinus);
         }
 
         private static double getDnPlus(final double[] mas) { // посчитали Dn+ исходя из формулы
-            double dnPluse = Double.MIN_VALUE;
+            double dnPlus = Double.MIN_VALUE;
             final int n = mas.length;
+
             for (int i = 0; i < n; i++) {
-                dnPluse = Math.max(dnPluse, ((double) i + 1) / n - FunctionProvider.getEmpiricFunc(mas[i], mas));
+                dnPlus = Math.max(dnPlus, ((double) i + 1) / n - FunctionProvider.getEmpiricFunc(mas[i], mas));
             }
 
-            return dnPluse;
+            return dnPlus;
         }
 
         private static double getDnMinus(final double[] mas) { // посчитали Dn- исходя из формулы
             double dnMinus = Double.MIN_VALUE;
             final int n = mas.length;
+
             for (int i = 0; i < n; i++) {
                 dnMinus = Math.max(dnMinus, FunctionProvider.getEmpiricFunc(mas[i], mas) - (double) i / n);
             }
@@ -126,37 +135,44 @@ public final class Lab1 {
         }
 
         static boolean isFulfilled(final double[] mas, final double eps) {
-            double[] v = getV(mas); // частоты
-            double[] p = getP(mas); // вероятности
-            double x2 = getX2(v, p); // значение X2, рассчитанное по формуле
-            double delta = getDelta(eps); // псевдосгенерированное значение
+            final double[] v = getV(mas); // частоты
+            final double[] p = getP(mas); // вероятности
+            final double x2 = getX2(v, p); // значение X2, рассчитанное по формуле
+            final double delta = getDelta(eps); // псевдосгенерированное значение
+
             return x2 < delta;
         }
 
         private static double[] getV(final double[] mas) {
-            double[] v = new double[K]; // частота вхождения в каждый промежуток заносится в этот массив, K промежутков
+            final double[] v = new double[K]; // частота вхождения в каждый промежуток заносится в этот массив, K промежутков
             final double interval = 1.0 / K;
+
             for (double value : mas) {
                 int pos = (int) Math.floor(value / interval);
                 v[pos]++;
             }
+
             return v;
         }
 
         private static double[] getP(final double[] mas) {
-            double[] p = new double[K]; // вероятность считается с помощью функции распределения
+            final double[] p = new double[K]; // вероятность считается с помощью функции распределения
+
             for (int i = 0; i < K; i++) {
                 p[i] = FunctionProvider.getEmpiricFunc(((double) i + 1) / K, mas)
                         - FunctionProvider.getEmpiricFunc((double) i / K, mas);
             }
+
             return p;
         }
 
         private static double getX2(final double[] v, final double[] p) {
             double resultSum = 0; // применяем формулу
+
             for (int i = 0; i < K; i++) {
                 resultSum += Math.pow((v[i] - N * p[i]), 2) / (N * p[i]);
             }
+
             return resultSum;
         }
 
