@@ -1,36 +1,14 @@
-import labs.Lab1;
-
-import java.util.Arrays;
-
+import labs.lab2.Lab2Demo;
 
 public class Main {
 
-    private static final int a0Star = 24389; // входные данные
-    private static final int b = 24389;
-    private static final int k = 32;
-
-    private static final double delta = 1.36; // табличное знаение
-
-    private static final double eps = 0.05; // уровень значимости
-
+    private final static int N = 1000;
+    private final static double eps = 0.05;
 
     public static void main(String[] args) {
 
-        final double[] mkm = Lab1.doTask1(a0Star, b); // МКМ реализация
-        final double[] maklarenMarsalia = Lab1.doTask2(a0Star, b, k); // реализация Макларена-Марсалии
-
-        System.out.println("Реализация БСВ с помощью мультипликативного конгруэнтного метода:\n");
-        System.out.println(Arrays.toString(mkm));
-        System.out.println();
-        System.out.println(Lab1.doTask3(mkm, delta, eps));
-
-        System.out.println("\n----\n");
-
-        System.out.println("Реализация БСВ с помощью метода Макларена-Марсальи:\n"); // оба датчика МКМ
-        System.out.println(Arrays.toString(maklarenMarsalia));
-        System.out.println();
-        System.out.println(Lab1.doTask3(maklarenMarsalia, delta, eps));
-
+//        Lab1Demo.launch(N, eps);
+        Lab2Demo.launch(N, eps);
 
     }
 

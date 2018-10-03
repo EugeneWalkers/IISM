@@ -1,4 +1,4 @@
-package utilities;
+package labs.lab1.utilities;
 
 public class FunctionProvider {
     private static double getI(final double x, final double right) { // реализация функции I<A>(x) = x включено в A? 1 : 0
