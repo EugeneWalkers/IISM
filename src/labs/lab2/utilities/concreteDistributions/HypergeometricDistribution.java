@@ -1,6 +1,7 @@
 package labs.lab2.utilities.concreteDistributions;
 
-import labs.lab2.utilities.CumulativeDistribution;
+import labs.utilities.CumulativeDistribution;
+import labs.utilities.Pair;
 
 public class HypergeometricDistribution implements CumulativeDistribution {
 
@@ -15,7 +16,7 @@ public class HypergeometricDistribution implements CumulativeDistribution {
     }
 
     @Override
-    public double getDistributionFunctionValue(double i) {
+    public double getDistributionFunctionValue(final double i) {
         double result = 0;
 
         for (int k = 0; k <= i; k++) {
@@ -36,8 +37,13 @@ public class HypergeometricDistribution implements CumulativeDistribution {
     }
 
     @Override
-    public double getP(int i) {
+    public double getP(final double i) {
         return getBinomialKoeff(D, i) * getBinomialKoeff(N - D, n - i) / getBinomialKoeff(N, n);
+    }
+
+    @Override
+    public Pair<Double, Double> generateValue() {
+        return null;
     }
 
     @Override
@@ -45,7 +51,7 @@ public class HypergeometricDistribution implements CumulativeDistribution {
         return "Гипергеометрическое распределение.";
     }
 
-    private double getBinomialKoeff(final int n, final int k) {
+    private double getBinomialKoeff(final int n, final double k) {
         double result = 1;
 
         for (double i = 1; i <= n - k; i++) {

@@ -1,6 +1,6 @@
 package labs.lab2;
 
-import labs.lab2.utilities.CumulativeDistribution;
+import labs.utilities.CumulativeDistribution;
 import labs.utilities.Pair;
 
 final class Lab2 {

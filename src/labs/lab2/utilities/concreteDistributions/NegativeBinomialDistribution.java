@@ -1,6 +1,7 @@
 package labs.lab2.utilities.concreteDistributions;
 
-import labs.lab2.utilities.CumulativeDistribution;
+import labs.utilities.CumulativeDistribution;
+import labs.utilities.Pair;
 
 public class NegativeBinomialDistribution implements CumulativeDistribution {
 
@@ -34,7 +35,7 @@ public class NegativeBinomialDistribution implements CumulativeDistribution {
     }
 
     @Override
-    public double getP(final int i) {
+    public double getP(final double i) {
         double result = r;
 
         for (int j = 1; j <= i; j++) {
@@ -50,6 +51,11 @@ public class NegativeBinomialDistribution implements CumulativeDistribution {
         }
 
         return result;
+    }
+
+    @Override
+    public Pair<Double, Double> generateValue() {
+        return null;
     }
 
     @Override

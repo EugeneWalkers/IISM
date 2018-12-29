@@ -1,6 +1,7 @@
 package labs.lab2.utilities.concreteDistributions;
 
-import labs.lab2.utilities.CumulativeDistribution;
+import labs.utilities.CumulativeDistribution;
+import labs.utilities.Pair;
 
 public class PoissonDistribution implements CumulativeDistribution {
 
@@ -32,7 +33,7 @@ public class PoissonDistribution implements CumulativeDistribution {
     }
 
     @Override
-    public double getP(final int i) {
+    public double getP(final double i) {
         double result = Math.exp(-lambda);
 
         for (double k = 1; k <= i; k++) {
@@ -40,6 +41,11 @@ public class PoissonDistribution implements CumulativeDistribution {
         }
 
         return result;
+    }
+
+    @Override
+    public Pair<Double, Double> generateValue() {
+        return null;
     }
 
 

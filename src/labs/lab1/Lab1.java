@@ -1,6 +1,7 @@
 package labs.lab1;
 
 import labs.lab1.utilities.FunctionProvider;
+import labs.utilities.Kolmogorov;
 import labs.utilities.Pair;
 import labs.utilities.Pearson;
 
@@ -36,15 +37,6 @@ final class Lab1 {
         final Pair<Double, Double>[] bi = doTask1(a0Star, b); // исходя из условия один из датчиков МКМ
         final Pair<Double, Double>[] ci = doTask1(a0Star, b); // почему бы и нет?
 
-        /*
-        Random random = new Random();
-        for (int i =0; i<N; i++){
-        ci[i] = random.nextInt(1000000)/1000000.0;
-        }
-        */
-
-//        System.arraycopy(bi, 0, vi, 0, k);
-
         for (int i = 0; i < k; i++) {
             vi[i] = new Pair<>(bi[i].getKey(), bi[i].getValue());
         }
@@ -78,60 +70,7 @@ final class Lab1 {
         return builder.toString();
     }
 
-    private final static class Kolmogorov {
 
-        private Kolmogorov() {
-
-        }
-
-        static boolean isFulfilled(final Pair<Double, Double>[] mass, final double delta) { // критерий выполняется, если sqrt(n)*Dn <= delta
-            final double dn = getDn(Pair.Converter.getValuesFromPair(mass));
-            final int n = mass.length;
-            final double result = Math.sqrt(n) * dn;
-
-            return result <= delta;
-        }
-
-        private static double getDn(final double[] mas) { // Dn - это максимум из Dn- и Dn+, каждая считается по своей формуле, используя функцию распределения
-            final double dnPlus = getDnPlus(mas);
-            final double dnMinus = getDnMinus(mas);
-
-            return Math.max(dnPlus, dnMinus);
-        }
-
-        private static double getDnPlus(final double[] mas) { // посчитали Dn+ исходя из формулы
-            double dnPlus = Double.MIN_VALUE;
-            final int n = mas.length;
-
-            for (int i = 0; i < n; i++) {
-                dnPlus = Math.max(dnPlus, ((double) i + 1) / n - FunctionProvider.getEmpiricFunc(mas[i], mas));
-            }
-
-            return dnPlus;
-        }
-
-        private static double getDnMinus(final double[] mas) { // посчитали Dn- исходя из формулы
-            double dnMinus = Double.MIN_VALUE;
-            final int n = mas.length;
-
-            for (int i = 0; i < n; i++) {
-                dnMinus = Math.max(dnMinus, FunctionProvider.getEmpiricFunc(mas[i], mas) - (double) i / n);
-            }
-
-            return dnMinus;
-        }
-
-        /*
-        private double[] getRandomValues(final int n){
-        double[] values = new double[n];
-        Random random = new Random();
-        for (int i=0; i<n; i++){
-        values[i] = random.nextInt(100000)/100000.0;
-        }
-        return values;
-        }
-        */
-    }
 
 
 }

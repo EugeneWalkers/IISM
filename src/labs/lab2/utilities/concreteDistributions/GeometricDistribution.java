@@ -1,12 +1,13 @@
 package labs.lab2.utilities.concreteDistributions;
 
-import labs.lab2.utilities.CumulativeDistribution;
+import labs.utilities.CumulativeDistribution;
+import labs.utilities.Pair;
 
 public class GeometricDistribution implements CumulativeDistribution {
 
     private final double p;
 
-    public GeometricDistribution(double p) {
+    public GeometricDistribution(final double p) {
         this.p = p;
     }
 
@@ -27,8 +28,13 @@ public class GeometricDistribution implements CumulativeDistribution {
     }
 
     @Override
-    public double getP(final int i) {
+    public double getP(final double i) {
         return p * Math.pow(1 - p, i);
+    }
+
+    @Override
+    public Pair<Double, Double> generateValue() {
+        return null;
     }
 
     @Override

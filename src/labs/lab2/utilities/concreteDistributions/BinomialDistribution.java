@@ -1,6 +1,7 @@
 package labs.lab2.utilities.concreteDistributions;
 
-import labs.lab2.utilities.CumulativeDistribution;
+import labs.utilities.CumulativeDistribution;
+import labs.utilities.Pair;
 
 public class BinomialDistribution implements CumulativeDistribution {
 
@@ -14,14 +15,6 @@ public class BinomialDistribution implements CumulativeDistribution {
 
     @Override
     public double getDistributionFunctionValue(final double i) {
-//        if (i <= 0) {
-//            return 0;
-//        } else if (i < 1) {
-//            return 1 - p;
-//        } else {
-//            return 1;
-//        }
-
         final int I = (int) Math.floor(i);
         double result = 0;
 
@@ -43,8 +36,13 @@ public class BinomialDistribution implements CumulativeDistribution {
     }
 
     @Override
-    public double getP(final int i) {
+    public double getP(final double i) {
         return getBinomialKoeff(i) * Math.pow(p, i) * Math.pow(1 - p, n - i);
+    }
+
+    @Override
+    public Pair<Double, Double> generateValue() {
+        return null;
     }
 
     @Override
@@ -52,7 +50,7 @@ public class BinomialDistribution implements CumulativeDistribution {
         return "Биномиальное распределение.";
     }
 
-    private double getBinomialKoeff(final int k) {
+    private double getBinomialKoeff(final double k) {
         double result = 1;
 
         for (double i = 1; i <= n - k; i++) {

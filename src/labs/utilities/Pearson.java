@@ -1,30 +1,27 @@
 package labs.utilities;
 
 import labs.lab1.utilities.FunctionProvider;
-import labs.lab2.utilities.CumulativeDistribution;
 
 public class Pearson {
 
     private static final int K = 40; // разбиение для критерия Пирсона
-    private static int N;
 
     private Pearson() {
 
     }
 
-    public static boolean isFulfilled(final Pair<Double, Double>[] mass, final CumulativeDistribution function, final double eps) {
-        N = mass.length;
+    public static boolean isFulfilled(final Pair<Double, Double>[] mass, final Distribution function, final double eps) {
         final double[] v = getV(mass); // частоты
-        final double[] p = getP(function); // вероятности
-        final double x2 = getX2(v, p); // значение X2, рассчитанное по формуле
+        final double[] p = getP(function, mass.length); // вероятности
+        final double x2 = getX2(v, p, mass.length); // значение X2, рассчитанное по формуле
         final double delta = getDelta(eps); // псевдосгенерированное значение
 
         return x2 < delta;
     }
 
-    public static double[] getErrorsMass(final CumulativeDistribution function, final int n) {
+    public static double[] getErrorsMass(final Distribution function, final int n, final int N) {
 
-        double[] errors = new double[n];
+        final double[] errors = new double[n];
 
         for (int k = 0; k < n; k++) {
 
@@ -36,30 +33,28 @@ public class Pearson {
             }
 
             final double[] v = getV(result); // частоты
-            final double[] p = getP(function); // вероятности
-            errors[k] = getX2(v, p);
+            final double[] p = getP(function, N); // вероятности
+            errors[k] = getX2(v, p, N);
 
         }
 
         return errors;
     }
 
-    private static double[] getP(final CumulativeDistribution function) {
+    private static double[] getP(final Distribution function, final int N) {
         final double[] p = new double[K]; // вероятность считается с помощью функции распределения
 
-        for (int i = 0; i < K; i++) {
-            p[i] = function.getDistributionFunctionValue(i + 1) - function.getDistributionFunctionValue(i);
+        for (double i = 0; i < K; i++) {
+            p[(int)i] = function.getDistributionFunctionValue((i + 1.0)/**N/K*/) - function.getDistributionFunctionValue(i/**N/K*/);
         }
 
         return p;
     }
 
     public static boolean isFulfilledWithEmpiricFunc(final Pair<Double, Double>[] mas, final double eps) { // для lab1
-        N = mas.length;
-
         final double[] v = getV(mas); // частоты
         final double[] p = getPWithEmpiricFunc(mas); // вероятности
-        final double x2 = getX2(v, p); // значение X2, рассчитанное по формуле
+        final double x2 = getX2(v, p, mas.length); // значение X2, рассчитанное по формуле
         final double delta = getDelta(eps); // псевдосгенерированное значение
 
         return x2 < delta;
@@ -84,12 +79,6 @@ public class Pearson {
                     break;
                 }
             }
-
-
-//            pos = (int) Math.floor(value.getValue() / interval);
-//            if (pos == K) {
-//                pos = K - 1;
-//            }
             v[pos]++;
         }
 
@@ -109,7 +98,7 @@ public class Pearson {
         return p;
     }
 
-    private static double getX2(final double[] v, final double[] p) {
+    private static double getX2(final double[] v, final double[] p, final int N) {
         double resultSum = 0; // применяем формулу
 
         for (int i = 0; i < K; i++) {
